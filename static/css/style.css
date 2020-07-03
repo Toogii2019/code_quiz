@@ -64,8 +64,8 @@ nav li:hover {
 }
 
 button {
-    padding: 10px;
-    margin: 100px;
+    /* padding: 10px;
+    margin: 100px; */
 }
 
 ul:last-child {
@@ -118,8 +118,14 @@ ul {
 p:hover {
     background: var(--black);
     color: white;
+    border: 1px solid;
 }
 
+.quiz-board-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
 @media(max-width: 780px) {
     .body-section {

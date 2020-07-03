@@ -87,6 +87,13 @@ const cssQuestions = [
   // etc.
 ];
 
+function resetPage() {
+  answerField.innerHTML = "";
+  startQuizButton.textContent = "Start Quiz";
+  var subTitle = document.getElementById("quiz");
+  subTitle.innerHTML = "";
+}
+
 function displayAnswers(index) {
   answerField.innerHTML = "";
   myQuestions[index].choices.forEach(function(item, i) {
@@ -113,29 +120,34 @@ function displayQuiz(index) {
   }
   else {
     questionField.textContent = myQuestions[index].title;
-    displayAnswers();
+    displayAnswers(index);
   }
 }
 
 
-function QuizLandingPage() {
+function quizLandingPage() {
+  resetPage();
   var subTitle = document.getElementById("quiz");
   var h3 = document.createElement("h3")
-  h3.innerText = "Javascript Quiz";
+  h3.innerText = `${quizTypeVar} quiz`;
+  subTitle.innerHTML = "";
   subTitle.appendChild(h3);
+  var h5 = document.createElement("h5");
+  h5.innerText = `Number of Questions: ${myQuestions.length}`;
+  subTitle.appendChild(h5);
+  var h5 = document.createElement("h5");
+  h5.innerText = `Time: ${myQuestions.length*15} seconds`;
+  subTitle.appendChild(h5);
 }
 
 function playQuiz(event) {
-  index = 0;
-  displayQuiz(index);
-}
 
-//Events
+  displayQuiz(index);
+  index++;
+}
+index = 0;
 var startQuizButton = document.getElementById("start-next");
 startQuizButton.addEventListener("click", playQuiz);
-// var nextButton = document.getElementById("next");
-// nextButton.addEventListener("click", playQuiz);
-
 
 var myQuestions = jsQuestions;
 var questionField = document.getElementById("quiz");
@@ -166,9 +178,9 @@ var timeEl = document.querySelector("#time");
 //   }, 1000);
 // }
 
-
-var quizType = document.getElementById("quiz-types");
-quizType.addEventListener("click", function (event) {
+var quizTypeVar = "Javascript";
+var quizTypeEl = document.getElementById("quiz-types");
+quizTypeEl.addEventListener("click", function (event) {
   var element = event.target;
   
   console.log(element.textContent);
@@ -176,18 +188,21 @@ quizType.addEventListener("click", function (event) {
     switch(element.textContent.split(" ")[0]) {
       case "HTML":
         myQuestions = htmlQuestions;
-        alert(myQuestions[0].title)
-
+        alert(myQuestions[0].title);
+        quizTypeVar = "HTML";
+        quizLandingPage();
         break;
       case "JS":
         myQuestions = jsQuestions;
         alert(myQuestions[0].title)
-
-
+        quizTypeVar = "Javascript";
+        quizLandingPage();
         break;
       case "CSS":
         myQuestions = cssQuestions;
         alert(myQuestions[0].title)
+        quizTypeVar = "CSS";
+        quizLandingPage();
 
         break;
       default:
@@ -196,7 +211,7 @@ quizType.addEventListener("click", function (event) {
   } 
 })
 
-QuizLandingPage();
+quizLandingPage();
 
 
 
