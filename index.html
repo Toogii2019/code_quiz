@@ -14,7 +14,7 @@
     <div class="wrapper">
         <header>
             <nav>
-              <ul>
+              <ul id="quiz-types">
                 <li>HTML Quiz</li>
                 <li>JS Quiz</li>
                 <li>CSS Quiz</li>
@@ -24,15 +24,16 @@
         <section class="body-section">
             <div class="card text-center quiz-board">
                 <div class="card-header">
-                  Time Remaining:
+                  Time Remaining: <span id="time"></span>
                 </div>
                 <div class="card-body">
                   <div id="quiz"></div>
-                  <button id="submit"></button>
-                  <div id="results"></div>
+                  <div id="answers"></div>
+                  <button id="start-next">Start Quiz</button>
+                  
                 </div>
                 <div class="card-footer text-muted">
-                  Total Score: 
+                  Total Score: <span id="score"></span>
                 </div>
             </div>
             <div class="card text-center score-board">
@@ -40,10 +41,11 @@
                   Score Board
                 </div>
                 <div class="card-body">
-                    <ul>
-                        <li>Date: 2020-07-01</li>
-                        <span>Score: 100%</span>
-                    </ul>
+                  <div>
+                    <div>Initials: <span id="initial"></span></div>
+                    <div>Date: <span id="date"></span></div>
+                    <div>Score: <span id="score"></span></div>
+                  </div>
                   <h5 class="card-title"></h5>
                   <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
                   <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
