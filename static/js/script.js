@@ -105,23 +105,20 @@ function displayAnswers(index) {
 }
 
 function displayQuiz(index) {
+  
   if (index == myQuestions.length) {
     return;
   }
   else if (index == 0) {
     startQuizButton.textContent = "Next";
-    var questionEl = document.createElement("h5");
-    questionEl.textContent = myQuestions[index].title;
-    questionEl.setAttribute("class", "questions");
-    questionField.innerHTML = "";
-    questionField.appendChild(questionEl);
-    // Displaying Answers
-    displayAnswers(index);
   }
-  else {
-    questionField.textContent = myQuestions[index].title;
-    displayAnswers(index);
-  }
+  var questionEl = document.createElement("h5");
+  questionEl.textContent = myQuestions[index].title;
+  questionEl.setAttribute("class", "questions");
+  questionField.innerHTML = "";
+  questionField.appendChild(questionEl);
+  // Displaying Answers
+  displayAnswers(index);
 }
 
 
@@ -141,10 +138,10 @@ function quizLandingPage() {
 }
 
 function playQuiz(event) {
-
   displayQuiz(index);
   index++;
 }
+
 index = 0;
 var startQuizButton = document.getElementById("start-next");
 startQuizButton.addEventListener("click", playQuiz);
