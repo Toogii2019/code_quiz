@@ -25,6 +25,12 @@ body {
     padding: 10px;
 }
 
+.answer {
+    list-style: circle;
+    text-align: left;
+    display: flex;
+}
+
 nav ul {
     background: var(--dark);
     box-shadow: var(--shadow);
@@ -48,35 +54,9 @@ nav li:hover {
 .body-section {
     display: grid;
     gap: 10px;
-    grid-template-columns: repeat(2, 1fr);
-    /* grid-template-columns: 1fr 1fr; */
-    /* grid-row-start: 2;
-    grid-row-start: 4; */
-
-}
-
-.quiz-board {
-    background: white;
-    box-shadow: var(--shadow);
-    padding: 30px;
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas:
-        'quiz quiz' 
-        'start end';
-}
-
-#quiz {
-    grid-area: quiz;
-    text-align: center;
-
-
-}
-
-#start-quiz {
-    grid-area: start;
-    text-align: center;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: 
+            'quiz-board score-board ads-box'; 
 }
 
 button {
@@ -84,20 +64,9 @@ button {
     margin: 100px;
 }
 
-#end-quiz {
-    grid-area: end;
-    text-align: center;
-
+ul:last-child {
+    color:white;
 }
-
-.score-board {
-    background: white;
-    box-shadow: var(--shadow);
-    padding: 30px;
-
-}
-
-
 
 
 footer {
@@ -108,45 +77,54 @@ footer {
     padding: 10px;
 }
 
-.show {
-    display: block;
+
+
+.ads-box {
+    grid-area: ads-box;
+    background: white;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.quiz-board {
+    grid-area: quiz-board;
 }
 
-.hide {
-    display: none;
+.score-board {
+    grid-area: score-board;
 }
 
-/* .body-section {
-    display: block;
-    border: 1px solid;
-    margin-top: -100px;
+.ads-box div {
+    border: 1px dotted;
+    padding: 80px;
+    text-align: center;
 }
 
-nav {
-    align-items: center;
-    padding-top: 10px;
-    margin: 10px;
+li {
+    list-style: none;
 }
 
-nav ul {
-    background: var(--dark);
-    display: inline;
-    padding:30px;
-    justify-content: center;
+ul {
+    align-content: center;
 }
 
-nav li {
-    display: inline;
-    padding: 30px;
-    color: white;
-    
-}
 
-nav a {
-    text-decoration: none;
-    color: white;
+@media(max-width: 780px) {
+    .body-section {
+        grid-template-areas:
+            'quiz-board'
+            'score-board'
+            'ads-box';
+    }
+    .quiz-board {
+        width: 100vw;
+    }
+    /* .box-3 {
+        grid-template-areas:
+          
+            'quiz-board'
+            'ascore-board'
+            'ads-box';
+    } */
 }
-
-nav a:hover {
-    color: var(--light-blue);
-} */

@@ -3,42 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="static/css/style.css">
-    <script src="static/js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <title>Javascript knowledge test</title>
 </head>
 <body>
     <div class="wrapper">
         <header>
             <nav>
-                <ul>
-                    <a href="#"><li>HTML Quiz</li></a>
-                    <a href="#"><li>Javascript Quiz</li></a>
-                    <a href="#"><li>CSS Quiz</li></a>
-                </ul>
+              <ul>
+                <li>HTML Quiz</li>
+                <li>JS Quiz</li>
+                <li>CSS Quiz</li>
+              </ul>
             </nav>
         </header>
         <section class="body-section">
-            <div class="quiz-board">
-                <div id="quiz" class="show" >
-                    <div id="question">Question</div>
-                    <div id="answer">Answer</div>
+            <div class="card text-center quiz-board">
+                <div class="card-header">
+                  Time Remaining:
                 </div>
-                <div id="start-quiz">
-                    <button id="start-quiz">Start Quiz</button>
+                <div class="card-body">
+                  <div id="quiz"></div>
+                  <button id="submit"></button>
+                  <div id="results"></div>
                 </div>
-                <div id="end-quiz">
-                    <button id=>End Quiz</button>
+                <div class="card-footer text-muted">
+                  Total Score: 
                 </div>
             </div>
-            <div class="score-board">
-                <div id="score">Score: 100pts</div>
-                <div id="date">Date: 2000-01-01</div>
+            <div class="card text-center score-board">
+                <div class="card-header">
+                  Score Board
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Date: 2020-07-01</li>
+                        <span>Score: 100%</span>
+                    </ul>
+                  <h5 class="card-title"></h5>
+                  <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+                  <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                </div>
+                <div class="card-footer text-muted">
+                  Total Try
+                </div>
+              </div>
+            <div class="ads-box">
+                <div>ads1</div>
+                <div>ads2</div>
+                <div>ads3</div>
             </div>
         </section>
         <footer>
             Toogii &copy 2020
         </footer>
+        <script src="static/js/script.js"></script>
+        <script src="static/js/questions.js"></script>
+
+
     </div>
     
 </body>
