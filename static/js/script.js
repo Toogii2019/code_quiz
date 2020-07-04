@@ -97,11 +97,11 @@ function updateScoreBoard() {
   else {
     currentHighestScore = 0;
   }
-  if (currentScore > currentHighestScore) {
+  if (totalScore > currentHighestScore) {
     today = new Date();
     var player = {
       initial: playerName,
-      score: currentScore,
+      score: totalScore,
       date: `${today.toDateString()} ${today.toTimeString().split(" ").slice(0, 1).toLocaleString()}`
     }
     localStorage.setItem('player', JSON.stringify(player));
@@ -175,7 +175,7 @@ function endQuiz() {
     timeRemaining = 0;
   }
   clearInterval(timerInterval);
-  currentScore += timeRemaining/10;
+  totalScore = currentScore + timeRemaining/10;
   // console.log("endquiz called with " + currentScore);
   var iniTials = document.createElement("input");
   iniTials.id = "initials-input";
@@ -189,9 +189,14 @@ function endQuiz() {
   var timeRemainingContainer = document.createElement("div");
   timeRemainingContainer.type = "number";
   timeRemainingContainer.textContent = `Time Remaining: ${timeRemaining} (${timeRemaining/10} score)`
+  var totalScoreContainer = document.createElement("div");
+  totalScoreContainer.type = "number";
+  totalScoreContainer.textContent = `Your Total Score: ${totalScore}`;
   questionField.appendChild(iniTials);
   answerField.appendChild(scoreContainer);
   answerField.appendChild(timeRemainingContainer);
+  answerField.appendChild(totalScoreContainer);
+
   QuizButton.textContent = "Submit";
 }
 
@@ -347,6 +352,7 @@ quizTypeEl.addEventListener("click", function (event) {
   } 
 })
 
+var totalScore = 0;
 var timerInterval;
 var endCalled = false;
 var timerStop = false;
