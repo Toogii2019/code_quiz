@@ -185,7 +185,7 @@ function endQuiz() {
   iniTials.setAttribute("class", "center");
   var scoreContainer = document.createElement("div");
   scoreContainer.type = "number";
-  scoreContainer.textContent = `Your Score: ${currentScore}`;
+  scoreContainer.textContent = `Your Quiz Score: ${currentScore}`;
   var timeRemainingContainer = document.createElement("div");
   timeRemainingContainer.type = "number";
   timeRemainingContainer.textContent = `Time Remaining: ${timeRemaining} (${timeRemaining/10} score)`
