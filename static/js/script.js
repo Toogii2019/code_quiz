@@ -91,8 +91,12 @@ function updateScoreBoard() {
     playerName = "Anonymous";
   }
   // console.log("quizButton called with " + currentScore);
-
-  currentHighestScore = JSON.parse(localStorage.getItem("player")).score;
+  if (localStorage.getItem("player")) {
+    currentHighestScore = JSON.parse(localStorage.getItem("player")).score;
+  }
+  else {
+    currentHighestScore = 0;
+  }
   if (currentScore > currentHighestScore) {
     today = new Date();
     var player = {
@@ -105,6 +109,7 @@ function updateScoreBoard() {
     
     showScoreBoard();
   }
+
   location.reload();
 
 }
@@ -222,9 +227,10 @@ function displayQuiz(index) {
     }
     else {
      endQuiz();
+     return;
     }
   }
-  else if (index == 0) {
+  else if (index === 0) {
     QuizButton.textContent = "Next";
   }
   var questionNumEl = document.createElement("h3");
