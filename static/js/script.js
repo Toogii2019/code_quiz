@@ -49,11 +49,6 @@ const htmlQuestions = [
     title: 'Commonly used data types DO NOT include:',
     choices: ['strings', 'booleans', 'alerts', 'numbers'],
     answer: 'alerts'
-  },
-  {
-    title: 'The condition in an if / else statement is enclosed within ____.',
-    choices: ['quotes', 'curly brackets', 'parentheses', 'square brackets'],
-    answer: 'parentheses'
   }
   // etc.
 ];
@@ -112,15 +107,25 @@ function checkAnswer(index) {
       if (answer[i].parentElement.textContent === myQuestions[index-1].answer) {
         currentScore += scoreIncrementStep;
         scoreEl.innerText = currentScore;
-        
+        correctAnswerChosen = true;
       }
     }
   }
-  
+  if (correctAnswerChosen === false) {
+    if (timeRemaining > 15) {
+      timeRemaining -= 15;
+    }
+    else {
+      timeRemaining = 0;
+    }
+  }
+  correctAnswerChosen = false;
 }
 
 function endQuiz() {
   resetPage();
+  timerStop = true;
+  console.log("My remaining time " + timeRemaining);
   var iniTials = document.createElement("input");
   iniTials.id = "initials-input";
   iniTials.name = "initials-input";
@@ -129,28 +134,37 @@ function endQuiz() {
   iniTials.setAttribute("class", "center");
   var scoreContainer = document.createElement("div");
   scoreContainer.type = "number";
-  scoreContainer.textContent = `Your Score: ${currentScore}`;
+  scoreContainer.textContent = `Your Score: ${(currentScore + timeRemaining/10).toFixed(2)}`;
+  var timeRemainingContainer = document.createElement("div");
+  timeRemainingContainer.type = "number";
+  timeRemainingContainer.textContent = `Time Remaining: ${timeRemaining} (${timeRemaining/10} score)`
   questionField.appendChild(iniTials);
   answerField.appendChild(scoreContainer);
+  answerField.appendChild(timeRemainingContainer);
   QuizButton.textContent = "Submit";
   var inputNode = document.getElementById("initials-input");
   QuizButton.addEventListener("click", function() {
     console.log(inputNode.value);
     if (inputNode.value) {
-      today = new Date();
-      var player = {
-        initial: inputNode.value,
-        score:currentScore,
-        date: `${today.toDateString()} ${today.toTimeString().split(" ").slice(0, 1).toLocaleString()}`
-      }
-      localStorage.setItem('player', JSON.stringify(player));
-      console.log(localStorage);
-      updateScoreBoard();
-      location.reload();
+      playerName = inputNode.value;
     }
     else {
-      alert("You must input your initials!");
+      playerName = "Anonymous";
     }
+    if (timeRemaining > 0) {
+      currentScore += timeRemaining/10;
+    }
+    today = new Date();
+    var player = {
+      initial: playerName,
+      score:currentScore.toFixed(2),
+      date: `${today.toDateString()} ${today.toTimeString().split(" ").slice(0, 1).toLocaleString()}`
+    }
+    localStorage.setItem('player', JSON.stringify(player));
+    console.log(localStorage);
+    updateScoreBoard();
+    location.reload();
+
   });
 
 }
@@ -204,6 +218,8 @@ function displayQuiz(index) {
 function quizLandingPage() {
   resetPage();
   index = 0;
+  timeRemaining = myQuestions.length*15;;
+  timeEl.textContent = timeRemaining;
   QuizButton.setAttribute("id", "start-next-finish");
   var subTitle = document.getElementById("quiz");
   var h3 = document.createElement("h3")
@@ -219,38 +235,39 @@ function quizLandingPage() {
   return;
 }
 
+function setTime() {
+  var timerInterval = setInterval(function() {
+    if (timerStop === true) {
+      clearInterval(timerInterval);
+      endQuiz();
+    }
+    timeRemaining--;
+    console.log(timeRemaining);
+
+    if(timeRemaining < 0) {
+      clearInterval(timerInterval);
+      timeEl.textContent = 0;
+      endQuiz();
+      // sendMessage();
+    }
+    else{
+      timeEl.textContent = timeRemaining;
+    }
+
+  }, 1000);
+}
+
 function playQuiz(event) {
   if (index > 0) {
     checkAnswer(index);
   }
+  else if (index === 0) {
+    setTime();
+  }
+
   displayQuiz(index);
   index++;
 }
-
-
-
-
-// var secondsLeft = myQuestions.length*15;
-
-
-// function displayQuestion(i) {
-//   questionField.innerText = myQuestions[i].question;
-// }
-
-// function setTime() {
-//   var timerInterval = setInterval(function() {
-//     secondsLeft--;
-//     // alert("Hi");
-
-//     timeEl.textContent = secondsLeft;
-
-//     if(secondsLeft === 0) {
-//       clearInterval(timerInterval);
-//       // sendMessage();
-//     }
-
-//   }, 1000);
-// }
 
 var quizTypeVar = "Javascript";
 var quizTypeEl = document.getElementById("quiz-types");
@@ -282,7 +299,9 @@ quizTypeEl.addEventListener("click", function (event) {
   } 
 })
 
-
+var timerStop = false;
+var correctAnswerChosen = false;
+var timeRemaining = 0;
 var index = 0;
 var QuizButton = document.getElementById("start-next-finish");
 QuizButton.addEventListener("click", playQuiz);
@@ -303,6 +322,7 @@ var scoreOnScoreBoard = document.getElementById("scoreboard-score");
 var dateOnScoreBoard = document.getElementById("scoreboard-date");
 
 var quizTypeOnScoreBoard = document.getElementById("scoreboard-date");
+
 
 updateScoreBoard();
 quizLandingPage();
