@@ -91,16 +91,20 @@ function updateScoreBoard() {
     playerName = "Anonymous";
   }
   // console.log("quizButton called with " + currentScore);
-  today = new Date();
-  var player = {
-    initial: playerName,
-    score: currentScore,
-    date: `${today.toDateString()} ${today.toTimeString().split(" ").slice(0, 1).toLocaleString()}`
+
+  currentHighestScore = JSON.parse(localStorage.getItem("player")).score;
+  if (currentScore > currentHighestScore) {
+    today = new Date();
+    var player = {
+      initial: playerName,
+      score: currentScore,
+      date: `${today.toDateString()} ${today.toTimeString().split(" ").slice(0, 1).toLocaleString()}`
+    }
+    localStorage.setItem('player', JSON.stringify(player));
+    // console.log(localStorage);
+    
+    showScoreBoard();
   }
-  localStorage.setItem('player', JSON.stringify(player));
-  // console.log(localStorage);
-  
-  showScoreBoard();
   location.reload();
 
 }
@@ -124,6 +128,15 @@ function resetPage() {
   var subTitle = document.getElementById("quiz");
   subTitle.innerHTML = "";
 }
+function penaltyApply() {
+  if (timeRemaining > 15) {
+    timeRemaining -= 15;
+  }
+  else {
+    timeRemaining = 0;
+    timerStop = true;
+  }
+}
 
 function checkAnswer(index) {
   answer = document.getElementsByClassName("quiz-answers");
@@ -137,22 +150,25 @@ function checkAnswer(index) {
       }
       else {
         correctAnswerChosen = false;
-        if (timeRemaining > 15) {
-          timeRemaining -= 15;
-        }
-        else {
-          timeRemaining = 0;
-        }
+        penaltyApply();
         return;
       }
+      answerChosen = true;
     }
   }
+  if (!answerChosen) {
+    alert("At least one answer must be chosen!");
+  }
 }
+
 function endQuiz() {
   endCalled = true;
   resetPage();
 
   timerStop = true;
+  if (timeRemaining < 0) {
+    timeRemaining = 0;
+  }
   currentScore += timeRemaining/10;
   // console.log("endquiz called with " + currentScore);
 
@@ -247,7 +263,7 @@ function quizLandingPage() {
   rewardNote.textContent = "Reward: If you manage to complete the quiz before time expires, you will get additional points.";
   var instruction = document.createElement("p");
 
-  instruction.textContent = "Score: Your score will be updated in the scoreboard.";
+  instruction.textContent = "Score: The highest score will be updated in the scoreboard.";
 
   subTitle.appendChild(h5);
   subTitle.appendChild(penaltyNote);
@@ -286,8 +302,10 @@ function playQuiz(event) {
   else if (index === 0) {
     setTime();
   }
-  displayQuiz(index);
-  index++;
+  if (answerChosen) {
+    displayQuiz(index);
+    index++;
+  }
 }
 
 var quizName = "Javascript";
@@ -322,6 +340,7 @@ quizTypeEl.addEventListener("click", function (event) {
 var endCalled = false;
 var timerStop = false;
 var correctAnswerChosen = false;
+var answerChosen = true;
 var timeRemaining = 0;
 var index = 0;
 var QuizButton = document.getElementById("start-next-finish");
@@ -335,6 +354,7 @@ var scoreEl = document.querySelector("#score");
 
 var currentScore = 0;
 var highestScore = 100;
+var currentHighestScore = 0;
 var scoreIncrementStep = Math.floor(highestScore/myQuestions.length);
 var answer;
 var initialOnScoreBoard = document.getElementById("scoreboard-initial");
