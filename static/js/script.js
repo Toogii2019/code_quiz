@@ -221,9 +221,11 @@ function displayAnswers(index) {
 function displayQuiz(index) {
   if (index === myQuestions.length) {
     // console.log("Calling endquiz");
+    
     if (endCalled) {
       // console.log("endcalled is true");
       updateScoreBoard();
+      return;
     }
     else {
      endQuiz();
@@ -310,7 +312,9 @@ function playQuiz(event) {
   }
   if (answerChosen) {
     displayQuiz(index);
-    index++;
+    if (index < myQuestions.length) {
+      index++;
+    }
   }
 }
 

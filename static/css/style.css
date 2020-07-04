@@ -94,6 +94,7 @@ footer {
 }
 .quiz-board {
     grid-area: quiz-board;
+    min-height: 500px;
 }
 
 .score-board {
