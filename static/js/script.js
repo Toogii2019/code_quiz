@@ -13,7 +13,7 @@ const jsQuestions = [
   {
     title: 'Which tool can you use to ensure code quality?',
     choices: ["Angular","jQuery","RequireJS","ESLint"],
-    answer: "ESlint"
+    answer: "ESLint"
   },
   {
     title: 'Commonly used data types DO NOT include:',
@@ -88,9 +88,18 @@ const cssQuestions = [
 ];
 
 
+function updateScoreBoard() {
+  player = JSON.parse(localStorage.getItem('player'));
+  initialOnScoreBoard.textContent = player.initial;
+  scoreOnScoreBoard.textContent = player.score;  
+  dateOnScoreBoard.textContent = player.date;
+
+}
+
 function resetPage() {
   answerField.innerHTML = "";
   QuizButton.textContent = "Start Quiz";
+  QuizButton.setAttribute("id", "start-next-finish");
   var subTitle = document.getElementById("quiz");
   subTitle.innerHTML = "";
 }
@@ -124,20 +133,25 @@ function endQuiz() {
   questionField.appendChild(iniTials);
   answerField.appendChild(scoreContainer);
   QuizButton.textContent = "Submit";
-  QuizButton.type = "submit";
-  QuizButton.addEventListener("click", function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-    var playerNameInput = document.querySelector("#initials-input");
-    console.log(playerNameInput.value.trim());
-    if (playerNameInput) {
-      console.log(playerNameInput.value);
+  var inputNode = document.getElementById("initials-input");
+  QuizButton.addEventListener("click", function() {
+    console.log(inputNode.value);
+    if (inputNode.value) {
+      today = new Date();
+      var player = {
+        initial: inputNode.value,
+        score:currentScore,
+        date: `${today.toDateString()} ${today.toTimeString().split(" ").slice(0, 1).toLocaleString()}`
+      }
+      localStorage.setItem('player', JSON.stringify(player));
+      console.log(localStorage);
+      updateScoreBoard();
+      location.reload();
     }
     else {
-      alert("Enter Your Initials and click Submit");
+      alert("You must input your initials!");
     }
-  })
-  return;
+  });
 
 }
 
@@ -187,8 +201,10 @@ function displayQuiz(index) {
 }
 
 
-function quizLandingPage(index) {
+function quizLandingPage() {
   resetPage();
+  index = 0;
+  QuizButton.setAttribute("id", "start-next-finish");
   var subTitle = document.getElementById("quiz");
   var h3 = document.createElement("h3")
   h3.innerText = `${quizTypeVar} quiz`;
@@ -200,6 +216,7 @@ function quizLandingPage(index) {
   var h5 = document.createElement("h5");
   h5.innerText = `Time: ${myQuestions.length*15} seconds`;
   subTitle.appendChild(h5);
+  return;
 }
 
 function playQuiz(event) {
@@ -239,30 +256,25 @@ var quizTypeVar = "Javascript";
 var quizTypeEl = document.getElementById("quiz-types");
 quizTypeEl.addEventListener("click", function (event) {
   var element = event.target;
+  index = 0;
+  currentScore = 0;
   
   if (element.matches("li")) {
     switch(element.textContent.split(" ")[0]) {
       case "HTML":
         myQuestions = htmlQuestions;
-        alert(myQuestions[0].title);
         quizTypeVar = "HTML";
-        index = 0;
         quizLandingPage();
         break;
       case "JS":
         myQuestions = jsQuestions;
-        alert(myQuestions[0].title)
         quizTypeVar = "Javascript";
-        index = 0;
         quizLandingPage();
         break;
       case "CSS":
         myQuestions = cssQuestions;
-        alert(myQuestions[0].title)
-        index = 0;
         quizTypeVar = "CSS";
         quizLandingPage();
-
         break;
       default:
         break;
@@ -271,9 +283,7 @@ quizTypeEl.addEventListener("click", function (event) {
 })
 
 
-
-
-index = 0;
+var index = 0;
 var QuizButton = document.getElementById("start-next-finish");
 QuizButton.addEventListener("click", playQuiz);
 
@@ -287,7 +297,15 @@ var currentScore = 0;
 var highestScore = 100;
 var scoreIncrementStep = Math.floor(highestScore/myQuestions.length);
 var answer;
-quizLandingPage(0);
+var initialOnScoreBoard = document.getElementById("scoreboard-initial");
+console.log(initialOnScoreBoard);
+var scoreOnScoreBoard = document.getElementById("scoreboard-score");
+var dateOnScoreBoard = document.getElementById("scoreboard-date");
+
+var quizTypeOnScoreBoard = document.getElementById("scoreboard-date");
+
+updateScoreBoard();
+quizLandingPage();
 
 // setTime();
 // i = 0;

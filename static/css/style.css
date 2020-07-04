@@ -146,6 +146,10 @@ p:hover {
     text-align: left;
 }
 
+.player-info {
+    text-align: left;
+}
+
 @media(max-width: 780px) {
     .body-section {
         grid-template-areas:
