@@ -174,9 +174,9 @@ function endQuiz() {
   if (timeRemaining < 0) {
     timeRemaining = 0;
   }
+  clearInterval(timerInterval);
   currentScore += timeRemaining/10;
   // console.log("endquiz called with " + currentScore);
-
   var iniTials = document.createElement("input");
   iniTials.id = "initials-input";
   iniTials.name = "initials-input";
@@ -281,7 +281,7 @@ function quizLandingPage() {
 }
 
 function setTime() {
-  var timerInterval = setInterval(function() {
+  timerInterval = setInterval(function() {
     if (timerStop === true) {
       clearInterval(timerInterval);
     }
@@ -347,6 +347,7 @@ quizTypeEl.addEventListener("click", function (event) {
   } 
 })
 
+var timerInterval;
 var endCalled = false;
 var timerStop = false;
 var correctAnswerChosen = false;
