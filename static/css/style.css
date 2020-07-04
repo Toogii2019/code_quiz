@@ -91,14 +91,19 @@ footer {
     flex-direction: column;
     justify-content: space-around;
     padding: 10px;
+    box-shadow: var(--shadow);
+
 }
 .quiz-board {
     grid-area: quiz-board;
     min-height: 500px;
+    box-shadow: var(--shadow);
+
 }
 
 .score-board {
     grid-area: score-board;
+    box-shadow: var(--shadow);
 }
 
 .ads-box div {
