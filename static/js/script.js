@@ -85,6 +85,9 @@ const cssQuestions = [
 
 function updateScoreBoard() {
   player = JSON.parse(localStorage.getItem('player'));
+  if (!player) {
+    return;
+  }
   initialOnScoreBoard.textContent = player.initial;
   scoreOnScoreBoard.textContent = player.score;  
   dateOnScoreBoard.textContent = player.date;
@@ -126,6 +129,7 @@ function endQuiz() {
   resetPage();
   timerStop = true;
   console.log("My remaining time " + timeRemaining);
+  currentScore += timeRemaining/10;
   var iniTials = document.createElement("input");
   iniTials.id = "initials-input";
   iniTials.name = "initials-input";
@@ -134,7 +138,7 @@ function endQuiz() {
   iniTials.setAttribute("class", "center");
   var scoreContainer = document.createElement("div");
   scoreContainer.type = "number";
-  scoreContainer.textContent = `Your Score: ${(currentScore + timeRemaining/10).toFixed(2)}`;
+  scoreContainer.textContent = `Your Score: ${currentScore.toFixed(2)}`;
   var timeRemainingContainer = document.createElement("div");
   timeRemainingContainer.type = "number";
   timeRemainingContainer.textContent = `Time Remaining: ${timeRemaining} (${timeRemaining/10} score)`
@@ -143,6 +147,7 @@ function endQuiz() {
   answerField.appendChild(timeRemainingContainer);
   QuizButton.textContent = "Submit";
   var inputNode = document.getElementById("initials-input");
+  console.log(currentScore);
   QuizButton.addEventListener("click", function() {
     console.log(inputNode.value);
     if (inputNode.value) {
@@ -151,17 +156,15 @@ function endQuiz() {
     else {
       playerName = "Anonymous";
     }
-    if (timeRemaining > 0) {
-      currentScore += timeRemaining/10;
-    }
     today = new Date();
     var player = {
       initial: playerName,
-      score:currentScore.toFixed(2),
+      score: currentScore,
       date: `${today.toDateString()} ${today.toTimeString().split(" ").slice(0, 1).toLocaleString()}`
     }
     localStorage.setItem('player', JSON.stringify(player));
     console.log(localStorage);
+    
     updateScoreBoard();
     location.reload();
 
@@ -223,7 +226,7 @@ function quizLandingPage() {
   QuizButton.setAttribute("id", "start-next-finish");
   var subTitle = document.getElementById("quiz");
   var h3 = document.createElement("h3")
-  h3.innerText = `${quizTypeVar} quiz`;
+  h3.innerText = `${quizName} quiz`;
   subTitle.innerHTML = "";
   subTitle.appendChild(h3);
   var h5 = document.createElement("h5");
@@ -231,7 +234,21 @@ function quizLandingPage() {
   subTitle.appendChild(h5);
   var h5 = document.createElement("h5");
   h5.innerText = `Time: ${myQuestions.length*15} seconds`;
+  var penaltyNote = document.createElement("p");
+  penaltyNote.textContent = "Penalty: There is a penalty for each wrong answered quesion, you will get -15 seconds from your timer.";
+  var rewardNote = document.createElement("p");
+  rewardNote.textContent = "Reward: If you manage to complete the quiz before time expires, you will get additional points.";
+  var instruction = document.createElement("p");
+
+  instruction.textContent = "Score: Your score will be updated in the scoreboard.";
+
+
   subTitle.appendChild(h5);
+  subTitle.appendChild(penaltyNote);
+  subTitle.appendChild(rewardNote);
+  subTitle.appendChild(instruction);
+
+
   return;
 }
 
@@ -239,7 +256,6 @@ function setTime() {
   var timerInterval = setInterval(function() {
     if (timerStop === true) {
       clearInterval(timerInterval);
-      endQuiz();
     }
     timeRemaining--;
     console.log(timeRemaining);
@@ -269,7 +285,7 @@ function playQuiz(event) {
   index++;
 }
 
-var quizTypeVar = "Javascript";
+var quizName = "Javascript";
 var quizTypeEl = document.getElementById("quiz-types");
 quizTypeEl.addEventListener("click", function (event) {
   var element = event.target;
@@ -280,17 +296,17 @@ quizTypeEl.addEventListener("click", function (event) {
     switch(element.textContent.split(" ")[0]) {
       case "HTML":
         myQuestions = htmlQuestions;
-        quizTypeVar = "HTML";
+        quizName = "HTML";
         quizLandingPage();
         break;
       case "JS":
         myQuestions = jsQuestions;
-        quizTypeVar = "Javascript";
+        quizName = "Javascript";
         quizLandingPage();
         break;
       case "CSS":
         myQuestions = cssQuestions;
-        quizTypeVar = "CSS";
+        quizName = "CSS";
         quizLandingPage();
         break;
       default:
