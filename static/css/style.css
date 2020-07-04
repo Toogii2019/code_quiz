@@ -114,11 +114,7 @@ ul {
     align-content: center;
 }
 
-p:hover {
-    background: var(--black);
-    color: white;
-    border: 1px solid;
-}
+
 
 .quiz-board-footer {
     display: flex;

@@ -82,6 +82,29 @@ const cssQuestions = [
   // etc.
 ];
 
+function updateScoreBoard() {
+  var inputNode = document.getElementById("initials-input");
+  if (inputNode.value) {
+    playerName = inputNode.value;
+  }
+  else {
+    playerName = "Anonymous";
+  }
+  // console.log("quizButton called with " + currentScore);
+  today = new Date();
+  var player = {
+    initial: playerName,
+    score: currentScore,
+    date: `${today.toDateString()} ${today.toTimeString().split(" ").slice(0, 1).toLocaleString()}`
+  }
+  localStorage.setItem('player', JSON.stringify(player));
+  // console.log(localStorage);
+  
+  showScoreBoard();
+  location.reload();
+
+}
+
 
 function showScoreBoard() {
   player = JSON.parse(localStorage.getItem('player'));
@@ -103,7 +126,7 @@ function resetPage() {
 }
 
 function checkAnswer(index) {
-  answer = document.getElementsByClassName("answer");
+  answer = document.getElementsByClassName("quiz-answers");
   for (i=0;i<answer.length;i++) {
     
     if (answer[i].checked) {
@@ -130,9 +153,8 @@ function endQuiz() {
   resetPage();
 
   timerStop = true;
-  console.log("My remaining time " + timeRemaining);
   currentScore += timeRemaining/10;
-  alert("endquiz called with " + currentScore);
+  // console.log("endquiz called with " + currentScore);
 
   var iniTials = document.createElement("input");
   iniTials.id = "initials-input";
@@ -149,33 +171,7 @@ function endQuiz() {
   questionField.appendChild(iniTials);
   answerField.appendChild(scoreContainer);
   answerField.appendChild(timeRemainingContainer);
-  QuizButton.setAttribute("id", "finish");
   QuizButton.textContent = "Submit";
-  var inputNode = document.getElementById("initials-input");
-
-  QuizButton.addEventListener("click", function() {
-    console.log(inputNode.value);
-    if (inputNode.value) {
-      playerName = inputNode.value;
-    }
-    else {
-      playerName = "Anonymous";
-    }
-    alert("quizButton called with " + currentScore);
-    today = new Date();
-    var player = {
-      initial: playerName,
-      score: currentScore,
-      date: `${today.toDateString()} ${today.toTimeString().split(" ").slice(0, 1).toLocaleString()}`
-    }
-    localStorage.setItem('player', JSON.stringify(player));
-    console.log(localStorage);
-    
-    showScoreBoard();
-    location.reload();
-
-  });
-
 }
 
 function displayAnswers(index) {
@@ -191,7 +187,7 @@ function displayAnswers(index) {
     var answerInput = document.createElement("input");
     answerInput.type = "radio";
     answerInput.name = "answer" + i;
-    answerInput.setAttribute("class", "answer");
+    answerInput.setAttribute("class", "quiz-answers");
     answerInput.id = "answer" + i;
     answerLabel.textContent = item;
     answerLabel.appendChild(answerInput);
@@ -203,11 +199,14 @@ function displayAnswers(index) {
 
 function displayQuiz(index) {
   if (index === myQuestions.length) {
-    alert("Calling endquiz")
+    // console.log("Calling endquiz");
     if (endCalled) {
+      // console.log("endcalled is true");
       updateScoreBoard();
     }
-    endQuiz();
+    else {
+     endQuiz();
+    }
   }
   else if (index == 0) {
     QuizButton.textContent = "Next";
@@ -263,7 +262,7 @@ function setTime() {
       clearInterval(timerInterval);
     }
     timeRemaining--;
-    console.log(timeRemaining);
+    // console.log(timeRemaining);
 
     if(timeRemaining < 0) {
       clearInterval(timerInterval);
@@ -339,14 +338,14 @@ var highestScore = 100;
 var scoreIncrementStep = Math.floor(highestScore/myQuestions.length);
 var answer;
 var initialOnScoreBoard = document.getElementById("scoreboard-initial");
-console.log(initialOnScoreBoard);
+// console.log(initialOnScoreBoard);
 var scoreOnScoreBoard = document.getElementById("scoreboard-score");
 var dateOnScoreBoard = document.getElementById("scoreboard-date");
 
 var quizTypeOnScoreBoard = document.getElementById("scoreboard-date");
 
 
-updateScoreBoard();
+showScoreBoard();
 quizLandingPage();
 
 // setTime();
