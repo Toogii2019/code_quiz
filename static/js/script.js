@@ -83,7 +83,7 @@ const cssQuestions = [
 ];
 
 
-function updateScoreBoard() {
+function showScoreBoard() {
   player = JSON.parse(localStorage.getItem('player'));
   if (!player) {
     return;
@@ -112,24 +112,28 @@ function checkAnswer(index) {
         scoreEl.innerText = currentScore;
         correctAnswerChosen = true;
       }
+      else {
+        correctAnswerChosen = false;
+        if (timeRemaining > 15) {
+          timeRemaining -= 15;
+        }
+        else {
+          timeRemaining = 0;
+        }
+        return;
+      }
     }
   }
-  if (correctAnswerChosen === false) {
-    if (timeRemaining > 15) {
-      timeRemaining -= 15;
-    }
-    else {
-      timeRemaining = 0;
-    }
-  }
-  correctAnswerChosen = false;
 }
-
 function endQuiz() {
+  endCalled = true;
   resetPage();
+
   timerStop = true;
   console.log("My remaining time " + timeRemaining);
   currentScore += timeRemaining/10;
+  alert("endquiz called with " + currentScore);
+
   var iniTials = document.createElement("input");
   iniTials.id = "initials-input";
   iniTials.name = "initials-input";
@@ -138,16 +142,17 @@ function endQuiz() {
   iniTials.setAttribute("class", "center");
   var scoreContainer = document.createElement("div");
   scoreContainer.type = "number";
-  scoreContainer.textContent = `Your Score: ${currentScore.toFixed(2)}`;
+  scoreContainer.textContent = `Your Score: ${currentScore}`;
   var timeRemainingContainer = document.createElement("div");
   timeRemainingContainer.type = "number";
   timeRemainingContainer.textContent = `Time Remaining: ${timeRemaining} (${timeRemaining/10} score)`
   questionField.appendChild(iniTials);
   answerField.appendChild(scoreContainer);
   answerField.appendChild(timeRemainingContainer);
+  QuizButton.setAttribute("id", "finish");
   QuizButton.textContent = "Submit";
   var inputNode = document.getElementById("initials-input");
-  console.log(currentScore);
+
   QuizButton.addEventListener("click", function() {
     console.log(inputNode.value);
     if (inputNode.value) {
@@ -156,6 +161,7 @@ function endQuiz() {
     else {
       playerName = "Anonymous";
     }
+    alert("quizButton called with " + currentScore);
     today = new Date();
     var player = {
       initial: playerName,
@@ -165,7 +171,7 @@ function endQuiz() {
     localStorage.setItem('player', JSON.stringify(player));
     console.log(localStorage);
     
-    updateScoreBoard();
+    showScoreBoard();
     location.reload();
 
   });
@@ -193,13 +199,15 @@ function displayAnswers(index) {
   }
   )
   answerField.appendChild(quizForm);
-  return;
 }
 
 function displayQuiz(index) {
-  if (index > (myQuestions.length-1)) {
+  if (index === myQuestions.length) {
+    alert("Calling endquiz")
+    if (endCalled) {
+      updateScoreBoard();
+    }
     endQuiz();
-    return;
   }
   else if (index == 0) {
     QuizButton.textContent = "Next";
@@ -242,13 +250,10 @@ function quizLandingPage() {
 
   instruction.textContent = "Score: Your score will be updated in the scoreboard.";
 
-
   subTitle.appendChild(h5);
   subTitle.appendChild(penaltyNote);
   subTitle.appendChild(rewardNote);
   subTitle.appendChild(instruction);
-
-
   return;
 }
 
@@ -263,7 +268,9 @@ function setTime() {
     if(timeRemaining < 0) {
       clearInterval(timerInterval);
       timeEl.textContent = 0;
-      endQuiz();
+      if (timerStop === false) {
+        endQuiz();
+      }
       // sendMessage();
     }
     else{
@@ -280,7 +287,6 @@ function playQuiz(event) {
   else if (index === 0) {
     setTime();
   }
-
   displayQuiz(index);
   index++;
 }
@@ -291,7 +297,6 @@ quizTypeEl.addEventListener("click", function (event) {
   var element = event.target;
   index = 0;
   currentScore = 0;
-  
   if (element.matches("li")) {
     switch(element.textContent.split(" ")[0]) {
       case "HTML":
@@ -315,6 +320,7 @@ quizTypeEl.addEventListener("click", function (event) {
   } 
 })
 
+var endCalled = false;
 var timerStop = false;
 var correctAnswerChosen = false;
 var timeRemaining = 0;
