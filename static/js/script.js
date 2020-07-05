@@ -43,6 +43,7 @@ function showScoreBoard(nameOfQuize) {
 }
 
 function resetPage() {
+  scoreEl.textContent = 0;
   answerField.innerHTML = "";
   QuizButton.textContent = "Start Quiz";
   QuizButton.setAttribute("id", "start-next-finish");
@@ -271,6 +272,7 @@ quizTypeEl.addEventListener("click", function (event) {
         myQuestions = htmlQuestions;
         quizName = "HTML";
         quizTypeName.value = quizName;
+        scoreIncrementStep = Math.floor(highestScore/myQuestions.length)
         quizLandingPage();
         showScoreBoard(quizName);
         
@@ -279,6 +281,7 @@ quizTypeEl.addEventListener("click", function (event) {
         myQuestions = jsQuestions;
         quizName = "Javascript";
         quizTypeName.value = quizName;
+        scoreIncrementStep = Math.floor(highestScore/myQuestions.length)
         quizLandingPage();
         showScoreBoard(quizName);
         break;
@@ -286,6 +289,7 @@ quizTypeEl.addEventListener("click", function (event) {
         myQuestions = cssQuestions;
         quizName = "CSS";
         quizTypeName.value = quizName;
+        scoreIncrementStep = Math.floor(highestScore/myQuestions.length)
         quizLandingPage();
         showScoreBoard(quizName);
         break;
