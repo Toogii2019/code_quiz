@@ -352,21 +352,18 @@ quizTypeEl.addEventListener("click", function (event) {
         quizName = "HTML";
         quizLandingPage();
         showScoreBoard(quizName);
-        quizTypeName.textContent = quizName;
         break;
       case "JS":
         myQuestions = jsQuestions;
         quizName = "Javascript";
         quizLandingPage();
         showScoreBoard(quizName);
-        quizTypeName.textContent = quizName;
         break;
       case "CSS":
         myQuestions = cssQuestions;
         quizName = "CSS";
         quizLandingPage();
         showScoreBoard(quizName);
-        quizTypeName.textContent = quizName;
         break;
       default:
         break;
@@ -404,7 +401,7 @@ var scoreOnScoreBoard = document.getElementById("scoreboard-score");
 var dateOnScoreBoard = document.getElementById("scoreboard-date");
 var quizTypeOnScoreBoard = document.getElementById("scoreboard-date");
 
-var quizTypeName = document.getElementById("quiz-name");
-quizTypeName.textContent = quizName;
+var quizTypeName = document.getElementById("quiztype");
+quizTypeName.addEventListener("change", function(event) {showScoreBoard(event.target.value)});
 showScoreBoard(quizName);
 quizLandingPage();
