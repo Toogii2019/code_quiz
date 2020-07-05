@@ -350,18 +350,21 @@ quizTypeEl.addEventListener("click", function (event) {
       case "HTML":
         myQuestions = htmlQuestions;
         quizName = "HTML";
+        quizTypeName.value = quizName;
         quizLandingPage();
         showScoreBoard(quizName);
         break;
       case "JS":
         myQuestions = jsQuestions;
         quizName = "Javascript";
+        quizTypeName.value = quizName;
         quizLandingPage();
         showScoreBoard(quizName);
         break;
       case "CSS":
         myQuestions = cssQuestions;
         quizName = "CSS";
+        quizTypeName.value = quizName;
         quizLandingPage();
         showScoreBoard(quizName);
         break;
