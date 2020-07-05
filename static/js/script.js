@@ -338,6 +338,9 @@ function quizLandingPage() {
   subTitle.appendChild(penaltyNote);
   subTitle.appendChild(rewardNote);
   subTitle.appendChild(instruction);
+
+  clearInterval(timerInterval);
+  
   return;
 }
 
@@ -394,6 +397,7 @@ quizTypeEl.addEventListener("click", function (event) {
         quizTypeName.value = quizName;
         quizLandingPage();
         showScoreBoard(quizName);
+        
         break;
       case "JS":
         myQuestions = jsQuestions;
