@@ -82,7 +82,7 @@ const cssQuestions = [
   // etc.
 ];
 
-function updateScoreBoard() {
+function updateScoreBoard(nameOfQuize) {
   var inputNode = document.getElementById("initials-input");
   if (inputNode.value) {
     playerName = inputNode.value;
@@ -91,8 +91,8 @@ function updateScoreBoard() {
     playerName = "Anonymous";
   }
   // console.log("quizButton called with " + currentScore);
-  if (localStorage.getItem("player")) {
-    currentHighestScore = JSON.parse(localStorage.getItem("player")).score;
+  if (localStorage.getItem(`${nameOfQuize}QuizResult`)) {
+    currentHighestScore = JSON.parse(localStorage.getItem(`${nameOfQuize}QuizResult`)).score;
   }
   else {
     currentHighestScore = 0;
@@ -104,10 +104,10 @@ function updateScoreBoard() {
       score: totalScore,
       date: `${today.toDateString()} ${today.toTimeString().split(" ").slice(0, 1).toLocaleString()}`
     }
-    localStorage.setItem('player', JSON.stringify(player));
+    localStorage.setItem(`${nameOfQuize}QuizResult`, JSON.stringify(player));
     // console.log(localStorage);
     
-    showScoreBoard();
+    showScoreBoard(quizName);
   }
 
   location.reload();
@@ -115,8 +115,8 @@ function updateScoreBoard() {
 }
 
 
-function showScoreBoard(quizName) {
-  player = JSON.parse(localStorage.getItem('player'));
+function showScoreBoard(nameOfQuize) {
+  player = JSON.parse(localStorage.getItem(`${nameOfQuize}QuizResult`));
   if (!player) {
     return;
   }
@@ -244,7 +244,7 @@ function displayQuiz(index) {
     
     if (endCalled) {
       // console.log("endcalled is true");
-      updateScoreBoard();
+      updateScoreBoard(quizName);
       return;
     }
     else {
@@ -351,16 +351,22 @@ quizTypeEl.addEventListener("click", function (event) {
         myQuestions = htmlQuestions;
         quizName = "HTML";
         quizLandingPage();
+        showScoreBoard(quizName);
+        quizTypeName.textContent = quizName;
         break;
       case "JS":
         myQuestions = jsQuestions;
         quizName = "Javascript";
         quizLandingPage();
+        showScoreBoard(quizName);
+        quizTypeName.textContent = quizName;
         break;
       case "CSS":
         myQuestions = cssQuestions;
         quizName = "CSS";
         quizLandingPage();
+        showScoreBoard(quizName);
+        quizTypeName.textContent = quizName;
         break;
       default:
         break;
@@ -398,6 +404,7 @@ var scoreOnScoreBoard = document.getElementById("scoreboard-score");
 var dateOnScoreBoard = document.getElementById("scoreboard-date");
 var quizTypeOnScoreBoard = document.getElementById("scoreboard-date");
 
-
+var quizTypeName = document.getElementById("quiz-name");
+quizTypeName.textContent = quizName;
 showScoreBoard(quizName);
 quizLandingPage();
