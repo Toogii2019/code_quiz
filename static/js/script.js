@@ -156,13 +156,17 @@ function checkAnswer(index) {
       else {
         correctAnswerChosen = false;
         penaltyApply();
-        return;
       }
       answerChosen = true;
+      return;
     }
   }
-  if (!answerChosen) {
+  answerChosen = false;
+  if (!endCalled) {
     alert("At least one answer must be chosen!");
+  }
+  else {
+    answerChosen = true;
   }
 }
 
