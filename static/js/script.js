@@ -115,7 +115,7 @@ function updateScoreBoard() {
 }
 
 
-function showScoreBoard() {
+function showScoreBoard(quizName) {
   player = JSON.parse(localStorage.getItem('player'));
   if (!player) {
     return;
@@ -210,18 +210,29 @@ function displayAnswers(index) {
   quizForm.role = "form";
   quizForm.id="quizfrom";
 
+
+
   myQuestions[index].choices.forEach(function(item, i) {
-    var answerLabel = document.createElement("label");
-    answerLabel.setAttribute("class", "radiocontainer");
-    answerLabel.name = "quiz";
+    var answerContainer = document.createElement("div");
+    answerContainer.setAttribute("class", "form-check");
+
     var answerInput = document.createElement("input");
+    answerInput.setAttribute("class", "form-check-input quiz-answers");
+    answerInput.setAttribute("id", "choice");
     answerInput.type = "radio";
-    answerInput.name = "answer" + i;
-    answerInput.setAttribute("class", "quiz-answers");
-    answerInput.id = "answer" + i;
+    answerInput.name = "choice";
+    answerInput.value = item;
+
+    var answerLabel = document.createElement("label");
+    answerLabel.setAttribute("class", "form-check-label");
+    answerLabel.for = "choice";
     answerLabel.textContent = item;
-    answerLabel.appendChild(answerInput);
-    quizForm.appendChild(answerLabel);
+    
+    
+    answerContainer.appendChild(answerInput);
+    answerContainer.appendChild(answerLabel);
+
+    quizForm.appendChild(answerContainer);
   }
   )
   answerField.appendChild(quizForm);
@@ -329,6 +340,7 @@ function playQuiz(event) {
 
 var quizName = "Javascript";
 var quizTypeEl = document.getElementById("quiz-types");
+
 quizTypeEl.addEventListener("click", function (event) {
   var element = event.target;
   index = 0;
@@ -364,6 +376,8 @@ var correctAnswerChosen = false;
 var answerChosen = true;
 var timeRemaining = 0;
 var index = 0;
+var scoreBoardType = document.getElementById("quiz-type-choose");
+
 var QuizButton = document.getElementById("start-next-finish");
 QuizButton.addEventListener("click", playQuiz);
 
@@ -382,12 +396,8 @@ var initialOnScoreBoard = document.getElementById("scoreboard-initial");
 // console.log(initialOnScoreBoard);
 var scoreOnScoreBoard = document.getElementById("scoreboard-score");
 var dateOnScoreBoard = document.getElementById("scoreboard-date");
-
 var quizTypeOnScoreBoard = document.getElementById("scoreboard-date");
 
 
-showScoreBoard();
+showScoreBoard(quizName);
 quizLandingPage();
-
-// setTime();
-// i = 0;
