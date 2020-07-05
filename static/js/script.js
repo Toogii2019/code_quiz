@@ -232,6 +232,7 @@ function endQuiz() {
   scoreContainer.textContent = `Your Quiz Score: ${currentScore}`;
   var timeRemainingContainer = document.createElement("div");
   timeRemainingContainer.type = "number";
+  timeEl.textContent = timeRemaining;
   timeRemainingContainer.textContent = `Time Remaining: ${timeRemaining} (${timeRemaining/10} score)`
   var totalScoreContainer = document.createElement("div");
   totalScoreContainer.type = "number";
