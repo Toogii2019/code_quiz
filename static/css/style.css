@@ -40,7 +40,7 @@ nav ul {
     background: var(--dark);
     box-shadow: var(--shadow);
     padding: 20px;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 nav li {
     display: inline;
@@ -79,7 +79,7 @@ footer {
     color: white;
     text-align: center;
     padding: 10px;
-    opacity: 0.8;
+    opacity: 0.9;
     /* margin-right: 20px; */
 }
 
