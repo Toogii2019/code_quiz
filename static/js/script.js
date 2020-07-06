@@ -23,7 +23,7 @@ function quizLandingPage(quizName, numberOfQuesions, toTalTime) {
   countDown = myQuestions.length*15;
   resetDom(parentDomObj);
   updateScoreBoard(quizName);
-  var childDomObjArray = [{h3: {class: "quiz-type", textContent: quizName}}, {h5: {class: "number-of-questions", textContent: `Number of Questions: ${numberOfQuesions}`}}, {h5: {class: "total-time", textContent: `Time: ${toTalTime} seconds`}}];
+  var childDomObjArray = [{h3: {class: "quiz-type", textContent: quizName}}, {h5: {class: "number-of-questions", textContent: `Number of Questions: ${numberOfQuesions}`}}, {h5: {class: "total-time", textContent: `Time: ${toTalTime} seconds`}}, {p:{innerHTML: `<strong>Penalty:</strong> There is a penalty for each wrong answered quesion, the remaining time will be reduced by 15 seconds when incorrect answer is chosen`}}, {p:{innerHTML: `<strong>Reward:</strong> If the player completes the quiz before time expires, the player will get additional points for each tens of seconds.`}}, {p:{innerHTML: `<strong>Score:</strong> The highest score will be updated in the scoreboard.`}}];
   landingPageDomArray = quizDomCreate(parentDomObj, childDomObjArray);
 }
 var timerInterval;
