@@ -79,7 +79,7 @@ quizTypeEl.addEventListener("click", function (event) {
 })
 
 function playQuiz(event) {
-  console.log(quizObj);
+  // console.log(quizObj);
   if (!quizObj) {
     quizObj = newQuizObj(quizName, toTalTime, myQuestions);
     quizObj.run();

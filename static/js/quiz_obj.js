@@ -11,6 +11,7 @@ function newQuizObj(quizName, toTalTime, myQuestions) {
     quizObj.highest_score = 0;
     quizObj.timeRemaining = myQuestions.length*15;
     quizObj.timerStatus = false;
+    quizObj.answerChosen = false;
 
     quizObj.run = function() {
         if (!this.timerStatus) {
@@ -23,12 +24,15 @@ function newQuizObj(quizName, toTalTime, myQuestions) {
         else if (this.index === this.number_of_questions) {
             // this.endQuiz();
             this.checkAnswer();
-            this.endQuiz();
+            if (this.answerChosen) {
+                this.endQuiz();
+            }
         }
         else if (this.index > 0) {
             this.checkAnswer();
             this.playQuiz();
         }
+        this.answerChosen = false;
     }
     
     quizObj.startQuiz = function() {
@@ -86,7 +90,8 @@ function newQuizObj(quizName, toTalTime, myQuestions) {
         var quizAnswers = document.getElementsByClassName("quiz-answers");
         for (i=0;i<quizAnswers.length;i++) {
             if(quizAnswers[i].checked) {
-                console.log(quizAnswers[i].value);
+                this.answerChosen = true;
+                // console.log(quizAnswers[i].value);
                 if (quizAnswers[i].value === this.question_array[this.index-1].answer) {
                     this.applyScore();
                 }
@@ -95,6 +100,13 @@ function newQuizObj(quizName, toTalTime, myQuestions) {
                     this.applyPenalty();
                 }
             }
+            else {
+                continue;
+            }
+        }
+        if (!this.answerChosen) {
+            alert("Please choose at least one answer");
+            this.index--;
         }
         // quizAnswers.forEach(function(answer, i) {
         //     console.log(answer);
@@ -124,9 +136,9 @@ function newQuizObj(quizName, toTalTime, myQuestions) {
         else {
             this.playerName = playerNameInput.value;
         }
-        console.log(this.playerName);
+        // console.log(this.playerName);
         var quizResult = JSON.parse(localStorage.getItem(`${this.name}QuizResult`));
-        console.log(quizResult);
+        // console.log(quizResult);
         this.totalScore = this.current_score + countDown/10;
         if (quizResult) {
             if (quizResult.score < this.totalScore ) {
@@ -164,10 +176,9 @@ function newQuizObj(quizName, toTalTime, myQuestions) {
 
     }
     quizObj.timer_start = function() {
-        console.log(countDown);
         this.timerStatus = true;
         timerInterval = setInterval(function() {
-            console.log(countDown);
+            // console.log(countDown);
             countDown--;
             if (countDown === 0) {
                 clearInterval(timerInterval);
