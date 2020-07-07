@@ -28,51 +28,41 @@ body {
     height: 100vh;
     padding: 10px;
 }
-
 .answer:hover {
     background: var(--light);
 }
 
 nav {
     width: 100vw;
+    position:relative;
 }
 
 nav ul {
-    background: var(--dark);
-    box-shadow: var(--shadow);
-    padding: 20px;
     opacity: 0.9;
-}
-nav li {
-    display: inline;
-    padding: 20px;
-}
-
-nav a {
-    text-decoration: none;
-    color: white;
-}
-
-nav li:hover {
-    background-color: white;
-    color: black;
+    height: auto;
 }
 
 .body-section {
     display: grid;
+    /* padding-top: 215px; */
+    padding-top: 0;
     gap: 10px;
+    transition-duration: .5s;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas: 
             'quiz-board score-board ads-box'; 
+}
+
+.body-section-open {
+    transition-duration: .5s;
+    padding-top: 215px;
+    /* transition-delay: 2s; */
 }
 
 #score {
     text-align: left;
 }
 
-ul:last-child {
-    color:white;
-}
 
 
 footer {
@@ -172,7 +162,7 @@ ul {
     text-align: left;
 }
 
-@media(max-width: 780px) {
+@media(max-width: 768px) {
     .body-section {
         grid-template-areas:
             'quiz-board'

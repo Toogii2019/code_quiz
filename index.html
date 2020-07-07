@@ -18,7 +18,7 @@
 <body>
     <div class="wrapper">
         <header>
-            <nav>
+            <!-- <nav>
               <ul id="quiz-types">
                 <li>HTML Quiz</li>
                 <li>JS Quiz</li>
@@ -26,9 +26,24 @@
                 <li>Play Introduction</li>
                 <li>Silent Mode Off</li>
               </ul>
+            </nav> -->
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark my-nav static-top">
+              <button class="navbar-toggler" id="hamburger-button" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse my-nav-div" id="navbarTogglerDemo01">
+                <a class="navbar-brand" href="#"></a>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0 nav-ul" id="quiz-types">
+                  <li class="nav-item nav-link">HTML Quiz</li>
+                  <li class="nav-item nav-link">JS Quiz</li>
+                  <li class="nav-item nav-link">CSS Quiz</li>
+                  <li class="nav-item nav-link">Play Introduction</li>
+                  <li class="nav-item nav-link">Silent Mode Off</li>
+                </ul>
+              </div>
             </nav>
         </header>
-        <section class="body-section">
+        <section class="body-section" id="body-section-id">
             <div class="card text-center quiz-board">
                 <div class="card-header">
                   Time Remaining: <span id="time"></span>
@@ -73,7 +88,7 @@
                 <div>ads3</div>
             </div>
         </section>
-        <footer>
+        <footer class="navbar-dark bg-dark">
             Toogii &copy 2020
         </footer>
         <audio id="correct-answer" type="audio/m4a">

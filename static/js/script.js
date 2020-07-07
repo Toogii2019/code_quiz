@@ -108,6 +108,20 @@ quizTypeEl.addEventListener("click", function (event) {
   } 
 })
 
+function pushContainer(event) {
+  var bodySection = document.getElementById("body-section-id");
+  if ($(bodySection).hasClass("body-section")) {
+    bodySection.className = "body-section-open";
+    $(bodySection).removeClass("body-section");
+    
+  }
+  else if ($(bodySection).hasClass("body-section-open")) {
+    bodySection.className = "body-section";
+    $(bodySection).removeClass("body-section-open");
+    
+  }
+}
+
 function playQuiz(event) {
   // console.log(quizObj);
   if (!quizObj) {
@@ -136,3 +150,8 @@ QuizButton.addEventListener("click", playQuiz);
 scoreBoardName.addEventListener("change", function(event) {
   updateScoreBoard(event.target.value);
 })
+
+
+var hamburgerButton = document.getElementById("hamburger-button");
+
+hamburgerButton.addEventListener("click", pushContainer);
