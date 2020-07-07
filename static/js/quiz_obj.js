@@ -93,10 +93,12 @@ function newQuizObj(quizName, toTalTime, myQuestions) {
                 this.answerChosen = true;
                 // console.log(quizAnswers[i].value);
                 if (quizAnswers[i].value === this.question_array[this.index-1].answer) {
+                    correctAnswerAudio.play();
                     this.applyScore();
                 }
                 else {
                     console.log("incorrect");
+                    incorrectAnswerAudio.play();
                     this.applyPenalty();
                 }
             }
@@ -114,7 +116,7 @@ function newQuizObj(quizName, toTalTime, myQuestions) {
         
     }
     quizObj.applyScore = function() {
-        this.current_score += 20;
+        this.current_score += 15;
     }
 
     quizObj.applyPenalty = function() {
