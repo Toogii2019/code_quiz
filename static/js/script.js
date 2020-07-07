@@ -79,7 +79,9 @@ quizTypeEl.addEventListener("click", function (event) {
         break;
       case "Play":
         console.log("Playing");
-        introVoice.play();
+        if (!silentMode) {
+          introVoice.play();
+        }
         element.textContent = "Pause Introduction";
         break;
       case "Pause":
@@ -96,11 +98,9 @@ quizTypeEl.addEventListener("click", function (event) {
         else {
           console.log("Entering silent mode");
           silentMode = true;
+          introVoice.pause();
           element.textContent = "Silent Mode On";
         }
-        
-        
-        
       default:
         break;
     }
