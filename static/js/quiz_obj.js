@@ -17,7 +17,9 @@ function newQuizObj(quizName, toTalTime, myQuestions) {
         if (!this.timerStatus) {
             this.timer_start();
         }
-
+        if (this.endCalled) {
+            this.submitScore();
+        }
         if (this.index === 0) {
             this.startQuiz();
         }
@@ -30,7 +32,9 @@ function newQuizObj(quizName, toTalTime, myQuestions) {
         }
         else if (this.index > 0) {
             this.checkAnswer();
-            this.playQuiz();
+            if (!this.endCalled) {
+                this.playQuiz();        
+            }
         }
         this.answerChosen = false;
     }
@@ -104,6 +108,7 @@ function newQuizObj(quizName, toTalTime, myQuestions) {
                         incorrectAnswerAudio.play();
                     }
                     this.applyPenalty();
+
                 }
             }
             else {
@@ -129,7 +134,9 @@ function newQuizObj(quizName, toTalTime, myQuestions) {
         }
         else {
             countDown = 0;
-
+            clearInterval(timerInterval);
+            quizObj.endQuiz();
+            
         }
     }
 

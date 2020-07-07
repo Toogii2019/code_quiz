@@ -119,6 +119,7 @@ function playQuiz(event) {
       quizObj.submitScore();
       return;
     }
+
     quizObj.index ++;
     quizObj.run();
     scoreEl.textContent = quizObj.current_score;
