@@ -99,6 +99,7 @@ quizTypeEl.addEventListener("click", function (event) {
           console.log("Entering silent mode");
           silentMode = true;
           introVoice.pause();
+          element.textContent = "Play Introduction";
           element.textContent = "Silent Mode On";
         }
       default:
