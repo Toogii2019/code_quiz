@@ -28,6 +28,7 @@ function quizLandingPage(quizName, numberOfQuesions, toTalTime) {
 }
 
 
+var silentMode = false;
 var correctAnswerAudio = document.getElementById("correct-answer");
 var incorrectAnswerAudio = document.getElementById("incorrect-answer");
 var introVoice = document.getElementById("intro-audio");
@@ -61,7 +62,6 @@ quizTypeEl.addEventListener("click", function (event) {
         toTalTime = numberOfQuesions*15
         quizName = "HTML";
         quizLandingPage(quizName, numberOfQuesions, toTalTime);
-
         break;
       case "JS":
         myQuestions = jsQuestions;
@@ -78,8 +78,29 @@ quizTypeEl.addEventListener("click", function (event) {
         quizLandingPage(quizName, numberOfQuesions, toTalTime);
         break;
       case "Play":
+        console.log("Playing");
         introVoice.play();
+        element.textContent = "Pause Introduction";
         break;
+      case "Pause":
+        console.log("pausing");
+        introVoice.pause();
+        element.textContent = "Play Introduction";
+        break;
+      case "Silent":
+        if (silentMode) {
+          console.log("Silent mode off");
+          silentMode = false;
+          element.textContent = "Silent Mode Off";
+        }
+        else {
+          console.log("Entering silent mode");
+          silentMode = true;
+          element.textContent = "Silent Mode On";
+        }
+        
+        
+        
       default:
         break;
     }

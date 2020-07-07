@@ -93,12 +93,16 @@ function newQuizObj(quizName, toTalTime, myQuestions) {
                 this.answerChosen = true;
                 // console.log(quizAnswers[i].value);
                 if (quizAnswers[i].value === this.question_array[this.index-1].answer) {
-                    correctAnswerAudio.play();
+                    if (!silentMode) {
+                        correctAnswerAudio.play();
+                    }
                     this.applyScore();
                 }
                 else {
                     console.log("incorrect");
-                    incorrectAnswerAudio.play();
+                    if (!silentMode) {
+                        incorrectAnswerAudio.play();
+                    }
                     this.applyPenalty();
                 }
             }
