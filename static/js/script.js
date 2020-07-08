@@ -155,3 +155,18 @@ scoreBoardName.addEventListener("change", function(event) {
 var hamburgerButton = document.getElementById("hamburger-button");
 
 hamburgerButton.addEventListener("click", pushContainer);
+
+function reSizeScreen() {
+  console.log("resized");
+  var bodySection = document.getElementById("body-section-id");
+
+  if (screen.width > 768) {
+    if ($(bodySection).hasClass("body-section-open")) {
+      bodySection.className = "body-section";
+      $(bodySection).removeClass("body-section-open");
+      $(hamburgerButton).ClassName = "navbar-toggler collapsed";
+      $(hamburgerButton).attr("aria-expanded", "false");
+     $(".my-nav-div").attr("class", "navbar-collapse my-nav-div collapse");  
+}      
+}
+}
