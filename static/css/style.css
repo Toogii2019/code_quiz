@@ -35,6 +35,7 @@ body {
 nav {
     width: 100vw;
     position:relative;
+    opacity: 0.8;
 }
 
 nav ul {
