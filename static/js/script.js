@@ -157,10 +157,9 @@ var hamburgerButton = document.getElementById("hamburger-button");
 hamburgerButton.addEventListener("click", pushContainer);
 
 function reSizeScreen() {
-  console.log("resized");
-  var bodySection = document.getElementById("body-section-id");
 
   if (screen.width > 768) {
+    var bodySection = document.getElementById("body-section-id");
     if ($(bodySection).hasClass("body-section-open")) {
       bodySection.className = "body-section";
       $(bodySection).removeClass("body-section-open");
